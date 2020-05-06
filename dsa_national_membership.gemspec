@@ -3,8 +3,8 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
-  gem.name          = 'dsa-membership'
-  gem.version       = '0.1'
+  gem.name          = 'dsa_national_membership'
+  gem.version       = '0.3'
   gem.authors       = ['Steve Tuckner']
   gem.email         = ['stevetuckner@gmail.com']
   gem.licenses      = ['MIT']
@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
                         This helps local chapters in dealing with DSA membership
                         lists sent to the chapter from National.
                       }
-  gem.homepage      = 'https://github.com/boberetezeke/dsa-membership'
+  gem.homepage      = 'https://github.com/boberetezeke/dsa-national-membership'
 
   gem.files         = `git ls-files`.split($/)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

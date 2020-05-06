@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-require_relative "../lib/process"
+require_relative "../lib/dsa_national_membership/process"
 
 describe Process do
   let(:header_row) {

@@ -1,6 +1,6 @@
 require "spec_helper"
 require "csv"
-require_relative "../lib/member"
+require_relative "../lib/dsa_national_membership/member"
 
 describe DsaNationalMembership::Member do
   let(:header_row) {
