@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 
 Gem::Specification.new do |gem|
   gem.name          = 'dsa_national_membership'
-  gem.version       = '0.3'
+  gem.version       = '0.4'
   gem.authors       = ['Steve Tuckner']
   gem.email         = ['stevetuckner@gmail.com']
   gem.licenses      = ['MIT']
@@ -15,7 +15,7 @@ Gem::Specification.new do |gem|
                       }
   gem.homepage      = 'https://github.com/boberetezeke/dsa-national-membership'
 
-  gem.files         = `git ls-files`.split($/)
+  gem.files         = `git ls-files`.split($/).reject{|f| f =~ /\.gem$/}
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
   gem.test_files    = gem.files.grep(%r{^(test|spec|features)/})
   gem.require_paths = ['lib']
