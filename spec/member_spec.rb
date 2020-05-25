@@ -43,20 +43,62 @@ describe DsaNationalMembership::Member do
     expect(subject.membership_status).to eq("member in good standing")
   end
 
-  it "creates two destination phone numbers" do
-    expect(subject.destination_phone_numbers.size).to eq(2)
+  context "with no wrong numbers" do
+    it "creates two destination phone numbers" do
+      expect(subject.destination_phone_numbers({}).size).to eq(2)
+    end
+
+    it "creates an output line with the phone numbers removed and the destination numbers added to the end" do
+      expect(subject.destination_row({})).to eq(
+        [
+          '1234','5678','Bob','B','Retezeke',nil,nil,'1616 Drury Lane',
+          nil,'St. Paul','MN','88111-2318','United States',
+          'kbakejae.drkfjnfae@gfafd.daf','Yes','FALSE',
+          '2/1/17','2/11/21','M','annual','never','Twin Cities','member in good standing',
+          '3632111181','3632121181'
+        ]
+      )
+    end
   end
 
-  it "creates an output line with the phone numbers removed and the destination numbers added to the end" do
-    expect(subject.destination_row).to eq(
-      [
-        '1234','5678','Bob','B','Retezeke',nil,nil,'1616 Drury Lane',
-        nil,'St. Paul','MN','88111-2318','United States',
-        'kbakejae.drkfjnfae@gfafd.daf','Yes','FALSE',
-        '2/1/17','2/11/21','M','annual','never','Twin Cities','member in good standing',
-        '3632111181','3632121181'
-      ]
-    )
+  context "with a wrong number for this member" do
+    let(:changed_phone_numbers) { {"3632111181" => "1234"} }
+
+    it "creates two destination phone numbers" do
+      expect(subject.destination_phone_numbers(changed_phone_numbers).size).to eq(1)
+    end
+
+    it "creates an output line with the phone numbers removed and the destination numbers added to the end" do
+      expect(subject.destination_row(changed_phone_numbers)).to eq(
+         [
+           '1234','5678','Bob','B','Retezeke',nil,nil,'1616 Drury Lane',
+           nil,'St. Paul','MN','88111-2318','United States',
+           'kbakejae.drkfjnfae@gfafd.daf','Yes','FALSE',
+           '2/1/17','2/11/21','M','annual','never','Twin Cities','member in good standing',
+           '3632121181'
+         ]
+       )
+    end
+  end
+
+  context "with a wrong number for a different member" do
+    let(:changed_phone_numbers) { {"3632111181" => "1235"} }
+
+    it "creates two destination phone numbers" do
+      expect(subject.destination_phone_numbers(changed_phone_numbers).size).to eq(2)
+    end
+
+    it "creates an output line with the phone numbers removed and the destination numbers added to the end" do
+      expect(subject.destination_row(changed_phone_numbers)).to eq(
+        [
+         '1234','5678','Bob','B','Retezeke',nil,nil,'1616 Drury Lane',
+         nil,'St. Paul','MN','88111-2318','United States',
+         'kbakejae.drkfjnfae@gfafd.daf','Yes','FALSE',
+         '2/1/17','2/11/21','M','annual','never','Twin Cities','member in good standing',
+         '3632111181','3632121181'
+        ]
+      )
+    end
   end
 
   it "transforms the header" do

@@ -13,22 +13,25 @@ module DsaNationalMembership
       end
     end
 
-    def destination_row
+    def destination_row(changed_phone_numbers)
       row = []
       row_minus_phones(row)
 
-      destination_phone_numbers.sort.each do |destination_phone|
+      destination_phone_numbers(changed_phone_numbers).sort.each do |destination_phone|
         row.push(destination_phone)
       end
 
       row
     end
 
-    def destination_phone_numbers
+    def destination_phone_numbers(changed_phone_numbers)
       [@mobile_phone, @work_phone, @home_phone, @work_phone].inject([]) do |sum, phone_numbers_as_string|
         phone_numbers = split_phone_numbers(phone_numbers_as_string)
         phone_numbers.each do |phone_number|
-          sum = sum + [phone_number] unless sum.include?(phone_number)
+          possible_wrong_number_ak_id = changed_phone_numbers[phone_number]
+          if possible_wrong_number_ak_id.nil? || possible_wrong_number_ak_id != @ak_id
+            sum = sum + [phone_number] unless sum.include?(phone_number)
+          end
         end
 
         sum
