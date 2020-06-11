@@ -94,7 +94,11 @@ describe Process do
       end
 
       it "detects changed members" do
-        expect(@diff[:changed_members].map{|ak_id, member| ak_id}).to eq(["2345"])
+        expect(@diff[:changed_members].map{|ak_id, member_changes| ak_id}).to eq(["2345"])
+      end
+
+      it "details fields changed for member" do
+        expect(@diff[:changed_members].map{|ak_id, member_changes| member_changes}).to eq([{last_name: {old_value: "Brooksy", new_value: "Brooks"}}])
       end
     end
   end
