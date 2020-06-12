@@ -48,8 +48,12 @@ module DsaNationalMembership
 
     def changed_phone_numbers
       return @changed_phone_numbers if @changed_phone_numbers
-      set_changed_numbers
-      @changed_phone_numbers
+      if @changes_filename
+        set_changed_numbers
+        @changed_phone_numbers
+      else
+        {}
+      end
     end
 
     def set_changed_numbers
